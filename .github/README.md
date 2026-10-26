@@ -7,7 +7,7 @@ provider and a deterministic fallback.
 
 Set repository **Actions secrets** and **variables**:
 
-- Gemini: secret `GEMINI_API_KEY`; variable `AI_PROVIDER=gemini`; variable
+- Gemini: secret  `GEMINI_API_KEY`; variable `AI_PROVIDER=gemini`; variable
   `AI_MODEL_GEMINI` set to a currently supported model ID.
 - OpenRouter: secret `OPENROUTER_API_KEY`; variable `AI_PROVIDER=openrouter`;
   variable `AI_MODEL_OPENROUTER` set to a currently available model ID ending
