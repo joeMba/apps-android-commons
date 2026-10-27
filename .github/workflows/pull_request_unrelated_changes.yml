@@ -43,6 +43,7 @@ jobs:
 
             Does this pull request appear to mix unrelated changes? Respond with only "yes" or "no".
         run: |
+          echo "key set: ${GEMINI_API_KEY:+yes}  model set: ${AI_MODEL_GEMINI:+yes}"
           provider="${AI_PROVIDER:-gemini}"
           case "$provider" in
             gemini)
