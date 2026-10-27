@@ -25,9 +25,7 @@ jobs:
         continue-on-error: true
         env:
           AI_PROVIDER: ${{ vars.AI_PROVIDER || 'openrouter' }}
-          AI_MODEL_GEMINI: ${{ vars.AI_MODEL_GEMINI }}
-          AI_MODEL_OPENROUTER: ${{ vars.AI_MODEL_OPENROUTER }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AI_MODEL_OPENROUTER: nvidia/nemotron-3-ultra-550b-a55b:free
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
@@ -43,14 +41,8 @@ jobs:
 
             Does this pull request appear to mix unrelated changes? Respond with only "yes" or "no".
         run: |
-          echo "key set: ${OPENROUTER_API_KEY:+yes}  model set: ${AI_MODEL_OPENROUTER:+yes}"
           provider="${AI_PROVIDER:-openrouter}"
           case "$provider" in
-            gemini)
-              base_url="https://generativelanguage.googleapis.com/v1beta/openai"
-              export AI_API_KEY="$GEMINI_API_KEY"
-              model="$AI_MODEL_GEMINI"
-              ;;
             openrouter)
               base_url="https://openrouter.ai/api/v1"
               export AI_API_KEY="$OPENROUTER_API_KEY"

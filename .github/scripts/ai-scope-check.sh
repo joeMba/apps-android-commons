@@ -45,7 +45,7 @@ case "$provider" in
     run_rules
     exit 0
     ;;
-  gemini|openrouter)
+  openrouter)
     ;;
   *)
     echo "::error::Unsupported AI_PROVIDER: $provider"
@@ -60,14 +60,12 @@ if [[ -z "$api_key" ]]; then
 fi
 
 if [[ -z "$model" ]]; then
-  echo "::error::AI scope check requires the matching AI_MODEL_GEMINI or AI_MODEL_OPENROUTER repository variable."
+  echo "::error::AI scope check requires an OpenRouter model."
   exit 1
 fi
 
 base_url="${base_url%/}"
 case "$provider:$base_url" in
-  gemini:https://generativelanguage.googleapis.com/v1beta/openai)
-    ;;
   openrouter:https://openrouter.ai/api/v1)
     if [[ "$model" != *:free ]]; then
       echo "::error::OpenRouter model ID must end in :free."
