@@ -103,6 +103,8 @@ http_status="000"
 curl_status=0
 for attempt in 1 2; do
   if http_status="$(curl -sS -o "$response_file" -w '%{http_code}' \
+    --connect-timeout 10 \
+    --max-time 60 \
     -H "Authorization: Bearer $api_key" \
     -H 'Content-Type: application/json' \
     --data-binary "@$request_file" \

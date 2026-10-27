@@ -19,16 +19,19 @@ provider documentation before setting these variables. Provider rate limits
 and free-tier terms can change.
 
 For pull requests from forks, GitHub does not provide repository secrets to
-the workflow. The AI request is skipped with a notice and the rule-based
-fallback runs instead. Do not change this workflow to `pull_request_target` or
-run pull request code with secrets.
+the workflow. When no API key is available, the provider is unavailable, or
+`AI_PROVIDER=none`, the rule-based fallback runs. It only logs a notice about
+a missing title, missing description, or unchecked checklist item. It cannot
+judge whether changes are related, always returns `no`, and never posts a
+comment. Do not change this workflow to `pull_request_target` or run pull
+request code with secrets.
 
 ## Fallback and disabling AI
 
 Set `AI_PROVIDER=none` to disable API calls and run only the rule-based
-fallback. It flags an empty title or description, or an unchecked Markdown
-task-list item; otherwise it returns `no`. These objective checks cannot
-determine whether code changes are semantically related to an issue.
+fallback. It only logs a notice about a missing title, missing description,
+or unchecked Markdown task-list item. It cannot judge whether changes are
+related, always returns `no`, and never posts a comment.
 
 To disable the entire workflow, disable **Check Pull Request Scope** from the
 repository's Actions settings or remove its `pull_request` trigger.
