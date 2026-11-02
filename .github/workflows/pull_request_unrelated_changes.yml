@@ -1,7 +1,9 @@
 name: Check Pull Request Scope
 
+# pull_request_target lets fork PRs use the API secret and a token that can comment.
+# It is safe ONLY because this workflow never checks out or executes code from the PR head.
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize]
 
 permissions:
@@ -26,7 +28,7 @@ jobs:
         env:
           AI_PROVIDER: ${{ vars.AI_PROVIDER || 'gemini' }}
           AI_MODEL_GEMINI: ${{ vars.AI_MODEL_GEMINI }}
-          AI_MODEL_OPENROUTER: ${{ vars.AI_MODEL_OPENROUTER }}
+          AI_MODEL_OPENROUTER: ${{ vars.AI_MODEL_OPENROUTER || 'nvidia/nemotron-3-ultra-550b-a55b:free' }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           PR_TITLE: ${{ github.event.pull_request.title }}
@@ -61,9 +63,8 @@ jobs:
               model=""
               ;;
             *)
-              base_url=""
-              export AI_API_KEY=""
-              model=""
+              echo "::error::Unsupported AI_PROVIDER: $provider"
+              exit 1
               ;;
           esac
 
